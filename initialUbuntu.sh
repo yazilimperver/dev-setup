@@ -18,6 +18,29 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 # install the powerline font
 sudo apt-get install fonts-powerline
 
+# SSH adimlari (1 oncelikle anahtar olustur, bunu repoya ekle)
+# Manuel ekleme
+ssh-keygen -t ed25519 -C "yazilimperver@gmail.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+# asagidakini github ekliyoruz
+cat ~/.ssh/id_ed25519.pub
+
+# CLI uzerinden SSH ekleme
+# Once gh'yu kuralim (guncel hal icin: https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
+type -p curl >/dev/null || sudo apt install curl -y
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+&& sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+&& sudo apt update \
+&& sudo apt install gh -y
+
+# Siteden token olusturalim ve ortam degiskenlerine ekleyelim. https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+$ gh auth login --with-token < mytoken.txt
+
+# Sonra da asagidaki ile kendimizi ekleyelim
+gh ssh-key add ~/.ssh/id_ed25519.pub --title "Yazilimperver WSL from CLI"
+
 # Diger fontlar
 curl -LJO https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
 curl -LJO https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
