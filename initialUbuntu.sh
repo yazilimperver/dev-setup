@@ -40,16 +40,33 @@ git clone https://github.com/Aloxaf/fzf-tab ~/somewhere
 source ~/somewhere/fzf-tab.plugin.zsh
 
 # Install lsd
+sudo apt update
+sudo apt install snapd
 sudo snap install lsd
+
+# ya da 
+wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd-musl_0.23.1_amd64.deb
+dpkg -i lsd-musl_0.23.1_amd64.deb
+
 
 # zsh-completions
 git clone https://github.com/zsh-users/zsh-completions.git
 fpath=(path/to/zsh-completions/src $fpath)
 rm -f ~/.zcompdump; compinit
 
-# zsh config icerisinde plugins=(... sudo) ile birlikte iki esc ile sudo otomatik ekleniyor
 
+# navi - An interactive cheatsheet tool for the command-line
+cargo install --locked navi
+
+# eger fzf'nin surumu .0.20 ise ubuntuda genelde oyle oluyor, onu bir silmek lazim
+# https://www.youtube.com/watch?v=qgG5Jhi_Els
+# sudo apt purge fzf deyip sonra asagidaki komutt
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+# zsh config icerisinde plugins=(... sudo) ile birlikte iki esc ile sudo otomatik ekleniyor
 sudo apt-get install dconf-cli
+
 
 # Ayarlar icin referans siteler
 # https://medium.com/@satriajanaka09/setup-zsh-oh-my-zsh-powerlevel10k-on-ubuntu-20-04-c4a4052508fd
